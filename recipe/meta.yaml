@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set version = '3.7.1' %}
 {% set sha256 = '670216f263e3074b21e0623c01bc0f562fdc0bffcd7bd42dd5d8edbe73a532c2' %}
 # TODO:
