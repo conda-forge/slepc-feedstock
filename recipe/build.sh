@@ -14,8 +14,8 @@ sedinplace s%$PETSC_DIR%\${PETSC_DIR}%g $SLEPC_ARCH/include/slepc*.h
 make
 make install
 
-rm -fr $PREFIX/bin
-rm -fr $PREFIX/share
+rm -fr $PREFIX/bin && mkdir $PREFIX/bin
+rm -fr $PREFIX/share && mkdir $PREFIX/share
 rm -fr $PREFIX/lib/lib$PKG_NAME.*.dylib.dSYM
 rm -f  $PREFIX/lib/$PKG_NAME/conf/files
 rm -f  $PREFIX/lib/$PKG_NAME/conf/*.py
