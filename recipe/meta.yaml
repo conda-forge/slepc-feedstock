@@ -1,10 +1,10 @@
 {% set build = 0 %}
-{% set version = '3.7.4' %}
-{% set sha256 = '2fb782844e3bc265a8d181c3c3e2632a4ca073111c874c654f1365d33ca2eb8a' %}
-# TODO:
-# wait for decision on mpi metapackage, then we can set values for supported mpi
-# implementations in conda-forge.yml
+{% set version = '3.8.0' %}
+{% set sha256 = 'c58ccc4e852d1da01112466c48efa41f0839649f3a265925788237d76cd3d963' %}
+{% set blas = os.environ.get('BLAS') or 'openblas' %}
+{% set openblas_version = '0.2.19' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
+{% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
 
 package:
   name: slepc
@@ -16,31 +16,46 @@ source:
   sha256: {{sha256}}
 
 build:
+  skip: true  # [win]
   number: {{build}}
   binary_relocation: true
   detect_binary_files_with_prefix: true
-  skip: true  # [win]
+  features:
+    - blas_{{blas}}
 
 requirements:
   build:
+    - toolchain
     - python 2.*
-    - {{mpi}}
+    - blas 1.* {{blas}}
+    {% if blas == 'openblas' %}
+    - openblas {{openblas_version}}
+    {% endif %}
+    - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
   run:
-    - {{mpi}}
+    - blas 1.* {{blas}}
+    {% if blas == 'openblas' %}
+    - openblas {{openblas_version}}
+    {% endif %}
+    - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
 
 test:
+  source_files:
+    - src/eps/examples/tests
   requires:
     - pkg-config
   commands:
+    - conda inspect linkages petsc  # [not win]
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --cflags SLEPc
+    - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --libs   SLEPc
 
 about:
   home: http://slepc.upv.es/
   summary: 'SLEPc: Scalable Library for Eigenvalue Problem Computations'
-  license: LGPL 3
-  license_file: COPYING.LESSER
+  license: BSD 2-Clause
+  license_file: LICENSE
 
 extra:
   recipe-maintainers:

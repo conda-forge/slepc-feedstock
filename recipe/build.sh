@@ -4,7 +4,10 @@ export PETSC_DIR=$PREFIX
 export SLEPC_DIR=$SRC_DIR
 export SLEPC_ARCH=installed-arch-conda-c-opt
 
-python2 ./configure \
+unset CC
+unset CXX
+
+$PYTHON ./configure \
   --prefix=$PREFIX
 
 sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
@@ -12,6 +15,12 @@ sedinplace s%$SLEPC_DIR%\${SLEPC_DIR}%g $SLEPC_ARCH/include/slepc*.h
 sedinplace s%$PETSC_DIR%\${PETSC_DIR}%g $SLEPC_ARCH/include/slepc*.h
 
 make
+
+# FIXME: Workaround mpiexec setting O_NONBLOCK in std{in|out|err}
+# See https://github.com/conda-forge/conda-smithy/pull/337
+# See https://github.com/pmodels/mpich/pull/2755
+make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
+
 make install
 
 rm -fr $PREFIX/bin && mkdir $PREFIX/bin
