@@ -1,8 +1,7 @@
 {% set build = 0 %}
-{% set version = '3.8.0' %}
-{% set sha256 = 'c58ccc4e852d1da01112466c48efa41f0839649f3a265925788237d76cd3d963' %}
+{% set version = '3.8.2' %}
+{% set sha256 = '1e7d20d20eb26da307d36017461fe4a55f40e947e232739179dbe6412e22ed13' %}
 {% set blas = os.environ.get('BLAS') or 'openblas' %}
-{% set openblas_version = '0.2.19' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
 {% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
 
@@ -25,27 +24,31 @@ build:
 
 requirements:
   build:
+    - gcc  # [not win]
     - toolchain
-    - python 2.*
+    - python 2.7.*
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
   run:
+    - libgcc  # [linux]
+    - libgfortran  # [osx]
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
 
 test:
+  requires:
+    - gcc  # [not win]
+    - pkg-config
   source_files:
     - src/eps/examples/tests
-  requires:
-    - pkg-config
   commands:
     - conda inspect linkages petsc  # [not win]
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --cflags SLEPc
