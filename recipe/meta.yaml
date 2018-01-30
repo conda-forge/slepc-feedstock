@@ -1,8 +1,7 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set version = '3.8.0' %}
 {% set sha256 = 'c58ccc4e852d1da01112466c48efa41f0839649f3a265925788237d76cd3d963' %}
 {% set blas = os.environ.get('BLAS') or 'openblas' %}
-{% set openblas_version = '0.2.19' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
 {% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
 
@@ -29,14 +28,14 @@ requirements:
     - python 2.*
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
   run:
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
