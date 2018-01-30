@@ -2,7 +2,6 @@
 {% set version = '3.8.2' %}
 {% set sha256 = '1e7d20d20eb26da307d36017461fe4a55f40e947e232739179dbe6412e22ed13' %}
 {% set blas = os.environ.get('BLAS') or 'openblas' %}
-{% set openblas_version = '0.2.20|0.2.20.*' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
 {% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
 
@@ -30,7 +29,7 @@ requirements:
     - python 2.7.*
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
@@ -39,7 +38,7 @@ requirements:
     - libgfortran  # [osx]
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas {{openblas_version}}
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
