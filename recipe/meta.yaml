@@ -1,6 +1,6 @@
 {% set build = 0 %}
-{% set version = '3.8.2' %}
-{% set sha256 = '1e7d20d20eb26da307d36017461fe4a55f40e947e232739179dbe6412e22ed13' %}
+{% set version = "3.8.3" %}
+{% set sha256 = '60a10ba01151b904f68b52f6d5da5830acf5f82ad7d9778711e62ffcf82ec2ca' %}
 {% set blas = os.environ.get('BLAS') or 'openblas' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
 {% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
@@ -16,7 +16,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: {{build}}
+  number: 0
   binary_relocation: true
   detect_binary_files_with_prefix: true
   features:
