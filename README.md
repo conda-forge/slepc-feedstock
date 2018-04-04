@@ -3,7 +3,7 @@ About slepc
 
 Home: http://slepc.upv.es/
 
-Package license: LGPL 3
+Package license: BSD 2-Clause
 
 Feedstock license: BSD 3-Clause
 
