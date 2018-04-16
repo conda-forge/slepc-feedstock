@@ -1,5 +1,5 @@
-{% set version = "3.8.3" %}
-{% set sha256 = '60a10ba01151b904f68b52f6d5da5830acf5f82ad7d9778711e62ffcf82ec2ca' %}
+{% set version = "3.9.0" %}
+{% set sha256 = '1f3930db56b4065aaf214ea758ddff1a70bf19d45544cbdfd19d2787db4bfe0b' %}
 {% set blas = os.environ.get('BLAS') or 'openblas' %}
 {% set mpi = os.environ.get('MPI') or 'mpich' %}
 {% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
@@ -28,7 +28,7 @@ requirements:
     - python 2.7.*
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
+    - openblas 0.2.20
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
@@ -37,7 +37,7 @@ requirements:
     - libgfortran  # [osx]
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
+    - openblas 0.2.20
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
@@ -46,10 +46,13 @@ test:
   requires:
     - gcc  # [not win]
     - pkg-config
-  source_files:
-    - src/eps/examples/tests
+  files:
+    - tests/test10.c
+    - tests/test14f.F
+    - tests/makefile
   commands:
-    - conda inspect linkages petsc  # [not win]
+    - conda inspect objects  slepc  # [osx]
+    - conda inspect linkages slepc  # [not win]
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --cflags SLEPc
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --libs   SLEPc
 
@@ -58,6 +61,7 @@ about:
   summary: 'SLEPc: Scalable Library for Eigenvalue Problem Computations'
   license: BSD 2-Clause
   license_file: LICENSE
+  license_family: BSD
 
 extra:
   recipe-maintainers:
