@@ -28,7 +28,7 @@ requirements:
     - python 2.7.*
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
@@ -37,7 +37,7 @@ requirements:
     - libgfortran  # [osx]
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20
+    - openblas 0.2.20|0.2.20.*
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
