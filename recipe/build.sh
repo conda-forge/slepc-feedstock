@@ -29,3 +29,4 @@ rm -fr $PREFIX/share/slepc/examples
 rm -fr $PREFIX/share/slepc/datafiles
 rm -f  $PREFIX/lib/slepc/conf/files
 rm -f  $PREFIX/lib/slepc/conf/*.log
+rm -fr $PREFIX/lib/libslepc.*.dylib.dSYM
