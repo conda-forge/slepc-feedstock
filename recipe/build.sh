@@ -1,8 +1,8 @@
 #!/bin/bash
-
+set -eu
 export PETSC_DIR=$PREFIX
 export SLEPC_DIR=$SRC_DIR
-export SLEPC_ARCH=installed-arch-conda-c-opt
+export SLEPC_ARCH=arch-conda-c-opt
 
 unset CC
 unset CXX
@@ -11,8 +11,10 @@ $PYTHON ./configure \
   --prefix=$PREFIX
 
 sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
-sedinplace s%$SLEPC_DIR%\${SLEPC_DIR}%g $SLEPC_ARCH/include/slepc*.h
-sedinplace s%$PETSC_DIR%\${PETSC_DIR}%g $SLEPC_ARCH/include/slepc*.h
+sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
+for path in $SLEPC_DIR $PREFIX; do
+    sedinplace s%$path%\${SLEPC_DIR}%g installed-arch-*/include/slepc*.h
+done
 
 make
 
@@ -23,12 +25,8 @@ make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
 
 make install
 
-rm -fr $PREFIX/bin && mkdir $PREFIX/bin
-rm -fr $PREFIX/share && mkdir $PREFIX/share
-rm -fr $PREFIX/lib/lib$PKG_NAME.*.dylib.dSYM
-rm -f  $PREFIX/lib/$PKG_NAME/conf/files
-rm -f  $PREFIX/lib/$PKG_NAME/conf/*.py
-rm -f  $PREFIX/lib/$PKG_NAME/conf/*.log
-rm -f  $PREFIX/lib/$PKG_NAME/conf/RDict.db
-rm -f  $PREFIX/lib/$PKG_NAME/conf/*BuildInternal.cmake
-find   $PREFIX/include -name '*.html' -delete
+rm -fr $PREFIX/share/slepc/examples
+rm -fr $PREFIX/share/slepc/datafiles
+rm -f  $PREFIX/lib/slepc/conf/files
+rm -f  $PREFIX/lib/slepc/conf/*.log
+rm -fr $PREFIX/lib/libslepc.*.dylib.dSYM
