@@ -7,7 +7,7 @@ export SLEPC_ARCH=arch-conda-c-opt
 unset CC
 unset CXX
 
-$PYTHON ./configure \
+python ./configure \
   --prefix=$PREFIX
 
 sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
