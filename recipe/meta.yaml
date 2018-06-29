@@ -21,8 +21,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - python 2.7.*
   host:
+    - python 2.7.*
     - {{ mpi }}
     - openblas
     - petsc
