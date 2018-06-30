@@ -15,7 +15,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 0
+  number: 1
   binary_relocation: true
   detect_binary_files_with_prefix: true
   features:
@@ -23,21 +23,20 @@ build:
 
 requirements:
   build:
-    - gcc  # [not win]
-    - toolchain
-    - python 2.7.*
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+  host:
+    - python
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
+    - openblas
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
   run:
-    - libgcc  # [linux]
-    - libgfortran  # [osx]
     - blas 1.* {{blas}}
     {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
+    - openblas
     {% endif %}
     - {{mpi}} {{req[mpi]}}
     - petsc {{version[:3]}}*
