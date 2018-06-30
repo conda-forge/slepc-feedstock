@@ -12,6 +12,10 @@ source:
 
 build:
   skip: true  # [win]
+  # ensure compilers are in host env
+  # so we find libgcc_ext.10.5
+  # I think it's a mistake that petsc looks for this lib
+  merge_build_host: true  # [osx]
   number: 1
   # do not remove feature until blas mpkg stops using track_features
   features:
