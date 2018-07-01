@@ -1,0 +1,16 @@
+mpi:
+  - mpich
+  - openmpi
+pin_run_as_build:
+  mpich:
+    min_pin: x.x
+    max_pin: x.x
+  openmpi:
+    min_pin: x.x
+    max_pin: x.x
+  petsc:
+    max_pin: x.x
+  suitesparse:
+    max_pin: x.x  # [linux]
+    # extra pinning due to conda-forge/suitesparse-feedstock#22
+    max_pin: x.x.x  # [osx]

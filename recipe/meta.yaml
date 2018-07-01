@@ -1,8 +1,5 @@
 {% set version = "3.9.1" %}
 {% set sha256 = 'e174ea7c127d9161eef976b0288f0c56d443a58d6ab2dc8af1e8bd66f156ce17' %}
-{% set blas = os.environ.get('BLAS') or 'openblas' %}
-{% set mpi = os.environ.get('MPI') or 'mpich' %}
-{% set req = {'mpich':'>=3.2', 'openmpi':'>=1.10'} %}
 
 package:
   name: slepc
@@ -15,36 +12,39 @@ source:
 
 build:
   skip: true  # [win]
-  number: 0
-  binary_relocation: true
-  detect_binary_files_with_prefix: true
+  # ensure compilers are in host env
+  # so we find libgcc_ext.10.5
+  # I think it's a mistake that petsc looks for this lib
+  merge_build_host: true  # [osx]
+  number: 1
+  # do not remove feature until blas mpkg stops using track_features
   features:
-    - blas_{{blas}}
+    - blas_openblas
+  run_exports:
+    - {{ pin_subpackage('slepc', min_pin='x.x', max_pin='x.x') }}
 
 requirements:
   build:
-    - gcc  # [not win]
-    - toolchain
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+  host:
     - python 2.7.*
-    - blas 1.* {{blas}}
-    {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
-    {% endif %}
-    - {{mpi}} {{req[mpi]}}
-    - petsc {{version[:3]}}*
+    - {{ mpi }}
+    - openblas
+    - petsc
+    - suitesparse
   run:
-    - libgcc  # [linux]
-    - libgfortran  # [osx]
-    - blas 1.* {{blas}}
-    {% if blas == 'openblas' %}
-    - openblas 0.2.20|0.2.20.*
-    {% endif %}
-    - {{mpi}} {{req[mpi]}}
-    - petsc {{version[:3]}}*
+    - {{ mpi }}
+    - openblas
+    - petsc
+    - suitesparse
 
 test:
   requires:
-    - gcc  # [not win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
     - pkg-config
   files:
     - tests/test10.c
