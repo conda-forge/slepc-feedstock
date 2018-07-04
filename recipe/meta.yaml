@@ -1,5 +1,5 @@
-{% set version = "3.9.1" %}
-{% set sha256 = 'e174ea7c127d9161eef976b0288f0c56d443a58d6ab2dc8af1e8bd66f156ce17' %}
+{% set version = "3.9.2" %}
+{% set sha256 = '247585b3f8c10bf50b9464cb8ef7b5f22bead6f96524384897a37ec4146eb03e' %}
 
 package:
   name: slepc
@@ -16,7 +16,7 @@ build:
   # so we find libgcc_ext.10.5
   # I think it's a mistake that petsc looks for this lib
   merge_build_host: true  # [osx]
-  number: 1
+  number: 0
   # do not remove feature until blas mpkg stops using track_features
   features:
     - blas_openblas
