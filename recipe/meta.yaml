@@ -1,5 +1,7 @@
-{% set version = "3.9.2" %}
-{% set sha256 = "247585b3f8c10bf50b9464cb8ef7b5f22bead6f96524384897a37ec4146eb03e" %}
+{% set version = "3.10.0" %}
+{% set sha256 = "069d7a579995e0be1567c5bc869251e29c00044369a786933ca3040149d0412a" %}
+
+{% set version_xy = ".".join(version.split(".")[:2]) %}
 
 package:
   name: slepc
@@ -32,7 +34,7 @@ requirements:
     - python 2.7.*
     - {{ mpi }}
     - openblas
-    - petsc
+    - petsc {{ version_xy }}.*
     - suitesparse
   run:
     - {{ mpi }}
