@@ -18,7 +18,7 @@ build:
   # so we find libgcc_ext.10.5
   # I think it's a mistake that petsc looks for this lib
   merge_build_host: true  # [osx]
-  number: 0
+  number: 1001
   # do not remove feature until blas mpkg stops using track_features
   features:
     - blas_openblas

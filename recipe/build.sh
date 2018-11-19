@@ -4,6 +4,11 @@ export PETSC_DIR=$PREFIX
 export SLEPC_DIR=$SRC_DIR
 export SLEPC_ARCH=arch-conda-c-opt
 
+# scrub debug-prefix-map args, which cause problems in pkg-config
+export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
+export CXXFLAGS=$(echo ${CXXFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
+export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
+
 unset CC
 unset CXX
 
