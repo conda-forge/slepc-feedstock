@@ -1,5 +1,5 @@
-{% set version = "3.10.1" %}
-{% set sha256 = "f64787c8c2ab3d2f6db3c67d2bfe6ee84f741ce3dfde1d2f8221e131820a12a1" %}
+{% set version = "3.10.2" %}
+{% set sha256 = "0594972293f6586458a54b7c1e1121b311a9c9449060355d52bb3bf09ad6812b" %}
 
 {% set version_xy = ".".join(version.split(".")[:2]) %}
 
@@ -13,7 +13,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 1003
+  number: 0
   run_exports:
     - {{ pin_subpackage('slepc', max_pin='x.x') }}
 
