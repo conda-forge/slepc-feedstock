@@ -8,7 +8,6 @@ package:
   version: {{version}}
 
 source:
-  fn:  slepc-{{version}}.tar.gz
   url: http://slepc.upv.es/download/distrib/slepc-{{version}}.tar.gz
   sha256: {{sha256}}
 
@@ -19,10 +18,8 @@ build:
   # I think it's a mistake that petsc looks for this lib
   merge_build_host: true  # [osx]
   number: 1003
-  # do not remove feature until blas mpkg stops using track_features
-  features:
   run_exports:
-    - {{ pin_subpackage('slepc', min_pin='x.x', max_pin='x.x') }}
+    - {{ pin_subpackage('slepc', max_pin='x.x') }}
 
 requirements:
   build:
