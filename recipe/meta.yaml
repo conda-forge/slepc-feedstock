@@ -24,7 +24,7 @@ requirements:
     - {{ compiler('fortran') }}
   host:
     - libblas
-    - libcblas
+    - liblapack
     - python 2.7.*
     - {{ mpi }}
     - petsc {{ version_xy }}.*
