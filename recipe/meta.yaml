@@ -1,5 +1,5 @@
-{% set version = "3.11.0" %}
-{% set sha256 = "bf29043c311fe2c549a25e2b0835095723a3eebc1dff288a233b32913b5762a2" %}
+{% set version = "3.11.1" %}
+{% set sha256 = "4816070d4ecfeea6212c6944cee22dc7b4763df1eaf6ab7847cc5ac5132608fb" %}
 
 {% set version_xy = ".".join(version.split(".")[:2]) %}
 
