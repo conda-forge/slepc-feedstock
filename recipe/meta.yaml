@@ -1,7 +1,8 @@
 {% set version = "3.11.2" %}
 {% set sha256 = "cd6a73ac0c9f689c12f2987000a7a28fa7df53fdc069fb59a2bb148699e741dd" %}
 
-{% set version_xy = ".".join(version.split(".")[:2]) %}
+{% set version_xy = version.rsplit(".", 1)[0] %}
+{% set mpi = mpi or 'mpich' %}
 
 package:
   name: slepc
