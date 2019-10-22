@@ -14,7 +14,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 1
+  number: 2
   run_exports:
     - {{ pin_subpackage('slepc', max_pin='x.x') }}
 
@@ -23,10 +23,11 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - python 2.7.*
   host:
     - libblas
+    - libcblas
     - liblapack
-    - python 2.7.*
     - {{ mpi }}
     - petsc {{ version_xy }}.*
     - suitesparse
@@ -37,17 +38,15 @@ requirements:
 
 test:
   requires:
+    - pkg-config
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - pkg-config
   files:
     - tests/test10.c
     - tests/test14f.F
     - tests/makefile
   commands:
-    - conda inspect objects  slepc  # [osx]
-    - conda inspect linkages slepc  # [not win]
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --cflags SLEPc
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --libs   SLEPc
 
