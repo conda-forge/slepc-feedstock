@@ -1,7 +1,8 @@
 {% set version = "3.11.2" %}
 {% set sha256 = "cd6a73ac0c9f689c12f2987000a7a28fa7df53fdc069fb59a2bb148699e741dd" %}
 
-{% set version_xy = ".".join(version.split(".")[:2]) %}
+{% set version_xy = version.rsplit(".", 1)[0] %}
+{% set mpi = mpi or 'mpich' %}
 
 package:
   name: slepc
@@ -13,7 +14,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 1
+  number: 2
   run_exports:
     - {{ pin_subpackage('slepc', max_pin='x.x') }}
 
@@ -22,10 +23,11 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - python 2.7.*
   host:
     - libblas
+    - libcblas
     - liblapack
-    - python 2.7.*
     - {{ mpi }}
     - petsc {{ version_xy }}.*
     - suitesparse
@@ -36,17 +38,15 @@ requirements:
 
 test:
   requires:
+    - pkg-config
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - pkg-config
   files:
     - tests/test10.c
     - tests/test14f.F
     - tests/makefile
   commands:
-    - conda inspect objects  slepc  # [osx]
-    - conda inspect linkages slepc  # [not win]
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --cflags SLEPc
     - PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig pkg-config --libs   SLEPc
 
