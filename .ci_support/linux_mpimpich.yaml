@@ -25,7 +25,7 @@ liblapack:
 mpi:
 - mpich
 petsc:
-- '3.11'
+- '3.12'
 pin_run_as_build:
   petsc:
     max_pin: x.x
