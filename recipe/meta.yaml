@@ -1,5 +1,5 @@
-{% set version = "3.12.1" %}
-{% set sha256 = "a1cc2e93a81c9f6b86abd81022c9d64b0dc2161e77fb54b987f963bc292e286d" %}
+{% set version = "3.12.2" %}
+{% set sha256 = "a586ce572a928ed87f04961850992a9b8e741677397cbaa3fb028323eddf4598" %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
 {% set mpi = mpi or 'mpich' %}
@@ -14,7 +14,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage('slepc', max_pin='x.x') }}
 
