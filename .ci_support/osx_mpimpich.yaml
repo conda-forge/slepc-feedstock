@@ -29,7 +29,7 @@ macos_min_version:
 mpi:
 - mpich
 petsc:
-- '3.12'
+- '3.13'
 pin_run_as_build:
   petsc:
     max_pin: x.x
