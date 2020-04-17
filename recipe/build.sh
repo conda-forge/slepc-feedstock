@@ -41,8 +41,13 @@ make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
 
 make install
 
+echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
+echo "Removing data files"
 rm -fr $PREFIX/share/slepc/datafiles
+echo "Removing unneeded files"
 rm -f  $PREFIX/lib/slepc/conf/files
 rm -f  $PREFIX/lib/slepc/conf/*.log
+rm -f  $PREFIX/lib/slepc/conf/*.pyc
+rm -f  $PREFIX/lib/slepc/conf/uninstall.py
 rm -fr $PREFIX/lib/libslepc.*.dylib.dSYM
