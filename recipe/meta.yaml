@@ -23,7 +23,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - python 2.7.*
+    - make
+    - python
   host:
     - libblas
     - libcblas
@@ -42,6 +43,7 @@ test:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - make
   files:
     - tests/test10.c
     - tests/test14f.F
