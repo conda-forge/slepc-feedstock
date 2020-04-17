@@ -15,10 +15,21 @@ unset CXX
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
 
-sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
+sedinplace() {
+  if [[ $(uname) == Darwin ]]; then
+    sed -i "" "$@"
+  else
+    sed -i"" "$@"
+  fi
+}
+
+# Replace abspath of ${SLEPC_DIR} and ${BUILD_PREFIX} with ${PREFIX}
 sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
-for path in $SLEPC_DIR $PREFIX; do
-    sedinplace s%$path%\${SLEPC_DIR}%g installed-arch-*/include/slepc*.h
+for path in $SLEPC_DIR $BUILD_PREFIX; do
+    for f in $(grep -l "${path}" installed-arch-*/include/slepc*.h); do
+        echo "Fixing ${path} in $f"
+        sedinplace s%$path%\${PREFIX}%g $f
+    done
 done
 
 make
