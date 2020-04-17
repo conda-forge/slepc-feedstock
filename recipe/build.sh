@@ -13,7 +13,7 @@ unset CC
 unset CXX
 
 python ./configure \
-  --prefix=$PREFIX
+  --prefix=$PREFIX || (cat configure.log && exit 1)
 
 sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
 sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
