@@ -12,13 +12,27 @@ export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 unset CC
 unset CXX
 
-python ./configure \
-  --prefix=$PREFIX
+# Add symlink to 'make' in ${PREFIX}/bin
+ln -s ${BUILD_PREFIX}/bin/make ${PREFIX}/bin
 
-sedinplace() { [[ $(uname) == Darwin ]] && sed -i "" $@ || sed -i"" $@; }
+python ./configure \
+  --prefix=$PREFIX || (cat configure.log && exit 1)
+
+sedinplace() {
+  if [[ $(uname) == Darwin ]]; then
+    sed -i "" "$@"
+  else
+    sed -i"" "$@"
+  fi
+}
+
+# Replace abspath of ${SLEPC_DIR} and ${BUILD_PREFIX} with ${PREFIX}
 sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
-for path in $SLEPC_DIR $PREFIX; do
-    sedinplace s%$path%\${SLEPC_DIR}%g installed-arch-*/include/slepc*.h
+for path in $SLEPC_DIR $BUILD_PREFIX; do
+    for f in $(grep -l "${path}" installed-arch-*/include/slepc*.h); do
+        echo "Fixing ${path} in $f"
+        sedinplace s%$path%\${PREFIX}%g $f
+    done
 done
 
 make
@@ -30,8 +44,16 @@ make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
 
 make install
 
+# Remove symlink to 'make' in ${PREFIX}/bin
+rm ${PREFIX}/bin/make
+
+echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
+echo "Removing data files"
 rm -fr $PREFIX/share/slepc/datafiles
+echo "Removing unneeded files"
 rm -f  $PREFIX/lib/slepc/conf/files
 rm -f  $PREFIX/lib/slepc/conf/*.log
+rm -f  $PREFIX/lib/slepc/conf/*.pyc
+rm -f  $PREFIX/lib/slepc/conf/uninstall.py
 rm -fr $PREFIX/lib/libslepc.*.dylib.dSYM
