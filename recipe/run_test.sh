@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Fix gethostbyname() issues in Azure Pipelines
+if [[ $(uname) == Darwin ]]; then
+    export HYDRA_IFACE=lo0
+fi
+
 export PETSC_DIR=${PREFIX}
 export SLEPC_DIR=${PREFIX}
 cd "tests"
