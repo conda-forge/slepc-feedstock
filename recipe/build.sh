@@ -12,8 +12,9 @@ export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 unset CC
 unset CXX
 
-# Add symlink to 'make' in ${PREFIX}/bin
-ln -s ${BUILD_PREFIX}/bin/make ${PREFIX}/bin
+# Add symlinks in ${PREFIX}/bin
+ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
+ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
 
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
@@ -44,8 +45,9 @@ make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
 
 make install
 
-# Remove symlink to 'make' in ${PREFIX}/bin
+# Remove symlinks in ${PREFIX}/bin
 rm ${PREFIX}/bin/make
+rm ${PREFIX}/bin/dsymutil
 
 echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
