@@ -255,4 +255,3 @@ Feedstock Maintainers
 * [@dalcinl](https://github.com/dalcinl/)
 * [@joseeroman](https://github.com/joseeroman/)
 * [@minrk](https://github.com/minrk/)
-
