@@ -13,12 +13,12 @@ runtest10: runtest10_krylovschur \
 	   runtest10_lanczos \
            runtest10_gd \
            runtest10_jd \
-           runtest10_gd2 \
            runtest10_rqcg \
            runtest10_lobpcg
+runtest10_lanczos: epsopts=-eps_lanczos_reorthog local
+runtest10_gd:      epsopts=-eps_gd_double_expansion
 runtest10_%:
-	eps=$*; if [ "$$eps" = gd2 ]; then eps="gd -eps_gd_double_expansion"; fi; \
-	${MPIEXEC} -n 1 ./test10 -eps_type $$eps -eps_nev 4 -m 11 -eps_max_it 500
+	${MPIEXEC} -n 1 ./test10 -eps_type $* ${epsopts} -eps_nev 4 -m 11 -eps_max_it 500
 
 runtest14f:
 	${MPIEXEC} -n 1 ./test14f
