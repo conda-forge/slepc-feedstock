@@ -1,7 +1,7 @@
 !
 !  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 !  SLEPc - Scalable Library for Eigenvalue Problem Computations
-!  Copyright (c) 2002-2018, Universitat Politecnica de Valencia, Spain
+!  Copyright (c) 2002-2021, Universitat Politecnica de Valencia, Spain
 !
 !  This file is part of SLEPc.
 !  SLEPc is distributed under a 2-clause BSD license (see LICENSE).
@@ -39,7 +39,6 @@
       EPSProblemType     ptype
       PetscMPIInt        rank
       PetscErrorCode     ierr
-      SlepcConvMonitor   ctx
       PetscViewerAndFormat vf
 
 ! - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -119,14 +118,14 @@
  150  format (' ... changed to ',I2)
 
       its = 8
-      cut = 1.0e-6
+      cut = 2.0e-6
       bal = EPS_BALANCE_ONESIDE
       call EPSSetBalance(eps,bal,its,cut,ierr)
       call EPSGetBalance(eps,bal,its,cut,ierr)
       if (rank .eq. 0) then
         write(*,160) bal,its,cut
       endif
- 160  format (' Balance: ',I2,', its=',I2,', cutoff=',F8.6)
+ 160  format (' Balance: ',I2,', its=',I2,', cutoff=',F9.6)
 
       tget = 4.8
       call EPSSetTarget(eps,tget,ierr)
@@ -136,7 +135,7 @@
       if (rank .eq. 0) then
         write(*,170) which,PetscRealPart(tget)
       endif
- 170  format (' Which = ',I2,', target = ',F3.1)
+ 170  format (' Which = ',I2,', target = ',F4.1)
 
       nev = 4
       call EPSSetDimensions(eps,nev,PETSC_DEFAULT_INTEGER,              &
@@ -154,7 +153,7 @@
       if (rank .eq. 0) then
         write(*,190) tol,its
       endif
- 190  format (' Tolerance =',F7.5,', max_its =',I4)
+ 190  format (' Tolerance =',F8.5,', max_its =',I4)
 
       call EPSSetConvergenceTest(eps,EPS_CONV_ABS,ierr)
       call EPSGetConvergenceTest(eps,conv,ierr)
@@ -169,10 +168,10 @@
      &                   PETSC_VIEWER_DEFAULT,vf,ierr)
       call EPSMonitorSet(eps,EPSMONITORFIRST,vf,                        &
      &                   PetscViewerAndFormatDestroy,ierr)
-      call SlepcConvMonitorCreate(PETSC_VIEWER_STDOUT_WORLD,            &
-     &                   PETSC_VIEWER_DEFAULT,ctx,ierr)
-      call EPSMonitorSet(eps,EPSMONITORCONVERGED,ctx,                   &
-     &                   SlepcConvMonitorDestroy,ierr)
+      call EPSMonitorConvergedCreate(PETSC_VIEWER_STDOUT_WORLD,         &
+     &                   PETSC_VIEWER_DEFAULT,PETSC_NULL_VEC,vf,ierr)
+      call EPSMonitorSet(eps,EPSMONITORCONVERGED,vf,                    &
+     &                   EPSMonitorConvergedDestroy,ierr)
       call EPSMonitorCancel(eps,ierr)
 
       call EPSGetST(eps,st,ierr)
