@@ -41,7 +41,7 @@ requirements:
     - suitesparse
   run:
     - {{ mpi }}
-    - petsc
+    - petsc * *{{ scalar }}*
     - suitesparse
 
 test:
