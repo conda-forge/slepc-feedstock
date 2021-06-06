@@ -17,8 +17,8 @@ ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
 
 python ./configure \
-  --prefix=$PREFIX || (cat configure.log && exit 1) \
-  --with-scalar-type=${scalar}
+  --with-scalar-type=${scalar} \
+  --prefix=$PREFIX || (cat configure.log && exit 1)
 
 sedinplace() {
   if [[ $(uname) == Darwin ]]; then
