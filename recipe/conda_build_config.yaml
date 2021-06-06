@@ -1,6 +1,9 @@
 mpi:
   - mpich
   - openmpi
+scalar:
+  - real
+  - complex
 pin_run_as_build:
   mpich:
     min_pin: x.x
