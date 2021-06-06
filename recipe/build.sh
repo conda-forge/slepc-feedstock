@@ -17,7 +17,6 @@ ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
 
 python ./configure \
-  --with-scalar-type=${scalar} \
   --prefix=$PREFIX || (cat configure.log && exit 1)
 
 sedinplace() {
