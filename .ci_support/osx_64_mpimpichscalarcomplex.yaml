@@ -26,11 +26,7 @@ macos_machine:
 - x86_64-apple-darwin13.4.0
 mpi:
 - mpich
-petsc:
-- '3.14'
 pin_run_as_build:
-  petsc:
-    max_pin: x.x
   suitesparse:
     max_pin: x.x.x
 scalar:

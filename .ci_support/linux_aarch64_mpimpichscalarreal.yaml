@@ -30,11 +30,7 @@ liblapack:
 - 3.8 *netlib
 mpi:
 - mpich
-petsc:
-- '3.14'
 pin_run_as_build:
-  petsc:
-    max_pin: x.x
   suitesparse:
     max_pin: x.x
 scalar:
