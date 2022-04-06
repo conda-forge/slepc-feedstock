@@ -11,35 +11,19 @@ jobs:
       linux_64_mpimpichscalarcomplex:
         CONFIG: linux_64_mpimpichscalarcomplex
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_64_mpimpichscalarreal:
         CONFIG: linux_64_mpimpichscalarreal
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_64_mpiopenmpiscalarcomplex:
         CONFIG: linux_64_mpiopenmpiscalarcomplex
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
       linux_64_mpiopenmpiscalarreal:
         CONFIG: linux_64_mpiopenmpiscalarreal
         UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
-      linux_aarch64_mpimpichscalarcomplex:
-        CONFIG: linux_aarch64_mpimpichscalarcomplex
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-aarch64
-      linux_aarch64_mpimpichscalarreal:
-        CONFIG: linux_aarch64_mpimpichscalarreal
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-aarch64
-      linux_aarch64_mpiopenmpiscalarcomplex:
-        CONFIG: linux_aarch64_mpiopenmpiscalarcomplex
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-aarch64
-      linux_aarch64_mpiopenmpiscalarreal:
-        CONFIG: linux_aarch64_mpiopenmpiscalarreal
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-aarch64
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
   timeoutInMinutes: 360
 
   steps:
