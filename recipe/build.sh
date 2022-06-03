@@ -9,8 +9,11 @@ export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 export CXXFLAGS=$(echo ${CXXFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 
-unset CC
 unset CXX
+
+# openmpi:
+export OMPI_CC=$CC
+export OPAL_PREFIX=$PREFIX
 
 # Add symlinks in ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
