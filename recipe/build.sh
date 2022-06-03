@@ -9,8 +9,11 @@ export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 export CXXFLAGS=$(echo ${CXXFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
 
-unset CC
 unset CXX
+
+# openmpi:
+export OMPI_CC=$CC
+export OPAL_PREFIX=$PREFIX
 
 # Add symlinks in ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
@@ -41,7 +44,9 @@ make
 # FIXME: Workaround mpiexec setting O_NONBLOCK in std{in|out|err}
 # See https://github.com/conda-forge/conda-smithy/pull/337
 # See https://github.com/pmodels/mpich/pull/2755
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
 make check MPIEXEC="${RECIPE_DIR}/mpiexec.sh"
+fi
 
 make install
 
