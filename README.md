@@ -145,6 +145,34 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=osx&configuration=osx_64_mpiopenmpiscalarreal" alt="variant">
                 </a>
               </td>
+            </tr><tr>
+              <td>osx_arm64_mpimpichscalarcomplex</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_mpimpichscalarcomplex" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_mpimpichscalarreal</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_mpimpichscalarreal" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_mpiopenmpiscalarcomplex</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_mpiopenmpiscalarcomplex" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_mpiopenmpiscalarreal</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_mpiopenmpiscalarreal" alt="variant">
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
