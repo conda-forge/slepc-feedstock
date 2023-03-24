@@ -1,11 +1,11 @@
-About slepc
-===========
+About slepc-feedstock
+=====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/slepc-feedstock/blob/main/LICENSE.txt)
 
 Home: http://slepc.upv.es/
 
 Package license: BSD-2-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/slepc-feedstock/blob/main/LICENSE.txt)
 
 Summary: SLEPc: Scalable Library for Eigenvalue Problem Computations
 
