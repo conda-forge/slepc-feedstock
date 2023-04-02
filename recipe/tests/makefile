@@ -1,16 +1,16 @@
 include ${SLEPC_DIR}/lib/slepc/conf/slepc_common
 
-test10: test10.o chkopts
+test10: test10.o
 	${CLINKER} -o test10 test10.o ${SLEPC_LIB}
 	${RM} test10.o
 
-test14f: test14f.o chkopts
+test14f: test14f.o
 	${FLINKER} -o test14f test14f.o ${SLEPC_LIB}
 	${RM} test14f.o
 
 runtest10: runtest10_krylovschur \
            runtest10_arnoldi \
-	   runtest10_lanczos \
+	       runtest10_lanczos \
            runtest10_gd \
            runtest10_jd \
            runtest10_rqcg \
