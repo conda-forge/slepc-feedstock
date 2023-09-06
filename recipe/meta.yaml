@@ -1,5 +1,5 @@
-{% set version = "3.19.1" %}
-{% set sha256 = "280737e9ef762d7f0079ad3ad29913215c799ebf124651c723c1972f71fbc0db" %}
+{% set version = "3.19.2" %}
+{% set sha256 = "ca7ed906795971fbe35f08ee251a26b86a4442a18609b878cba00835c9d62034" %}
 {% set build = 0 %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
@@ -15,6 +15,8 @@ package:
 source:
   url: http://slepc.upv.es/download/distrib/slepc-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - 000-pkgconfig.patch
 
 build:
   skip: true  # [win]
