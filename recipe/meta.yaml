@@ -15,8 +15,6 @@ package:
 source:
   url: http://slepc.upv.es/download/distrib/slepc-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - 000-pkgconfig.patch
 
 build:
   skip: true  # [win]
