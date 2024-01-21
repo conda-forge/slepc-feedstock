@@ -28,6 +28,8 @@ mpi:
 - openmpi
 mpich:
 - '4'
+mumps_mpi:
+- 5.6.2
 openmpi:
 - '4'
 petsc:
