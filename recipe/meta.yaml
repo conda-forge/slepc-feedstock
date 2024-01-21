@@ -1,6 +1,6 @@
 {% set version = "3.20.1" %}
 {% set sha256 = "5a36b664895881d3858d0644f56bf7bb922bdab70d732fa11cbf6442fec11806" %}
-{% set build = 0 %}
+{% set build = 1 %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
 {% set mpi = mpi or 'mpich' %}
@@ -39,11 +39,15 @@ requirements:
     - libcblas
     - liblapack
     - {{ mpi }}
+    - mumps-mpi
     - petsc {{ version_xy }}.* {{ scalar }}_*
+    - scalapack
     - suitesparse
   run:
     - {{ mpi }}
+    - mumps-mpi
     - petsc
+    - scalapack
     - suitesparse
 
 test:
