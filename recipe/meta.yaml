@@ -39,11 +39,15 @@ requirements:
     - libcblas
     - liblapack
     - {{ mpi }}
+    - mumps_mpi
     - petsc {{ version_xy }}.* {{ scalar }}_*
+    - scalapack
     - suitesparse
   run:
     - {{ mpi }}
+    - mumps_mpi
     - petsc
+    - scalapack
     - suitesparse
 
 test:
