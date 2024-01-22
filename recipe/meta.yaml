@@ -15,9 +15,6 @@ package:
 source:
   url: http://slepc.upv.es/download/distrib/slepc-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # avoid transitive overlinking through petsc
-    - link-petsc.patch
 
 build:
   skip: true  # [win]
