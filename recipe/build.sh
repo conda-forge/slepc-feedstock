@@ -54,7 +54,7 @@ test -f $slepcvariables
 cat >> $slepcvariables << 'EOF'
 # conda-forge overrides to avoid over-linking
 SLEPC_LIB_BASIC = -lslepc
-PETSC_SNES_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${PETSC_LIB_BASIC} -lblas -llapack -lscalapack
+PETSC_SNES_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${PETSC_LIB_BASIC} ${BLASLAPACK_LIB} -lscalapack
 SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${SLEPC_LIB_BASIC} ${PETSC_LIB_BASIC}
 EOF
 
