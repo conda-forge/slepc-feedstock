@@ -1,4 +1,4 @@
-From a3fc5bc344905c849c8ffcdf4153bacab376c71b Mon Sep 17 00:00:00 2001
+From 85497b452e219b99dce32204f6d00f202240e183 Mon Sep 17 00:00:00 2001
 From: Min RK <benjaminrk@gmail.com>
 Date: Mon, 22 Jan 2024 12:15:07 +0100
 Subject: [PATCH] only link direct dependencies
@@ -6,21 +6,24 @@ Subject: [PATCH] only link direct dependencies
 petsc, blas, lapack, scalapack
 
 and don't export more than -lslepc in SLEPC_LIB
+
+SLEPC_LIB is only slepc, petsc
 ---
- config/package.py        | 3 ++-
- config/packages/slepc.py | 5 +++--
+ config/package.py        | 4 +++-
+ config/packages/slepc.py | 6 ++++--
  gmakefile                | 6 +++---
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/config/package.py b/config/package.py
-index 86c82d84b..751c1de94 100644
+index 86c82d84b..834b5bb5b 100644
 --- a/config/package.py
 +++ b/config/package.py
-@@ -366,8 +366,9 @@ Downloaded package %s from: %s is not a tarball.
+@@ -366,8 +366,10 @@ Downloaded package %s from: %s is not a tarball.
        self.log.Exit('Cannot create temporary directory')
      try:
        with open(os.path.join(tmpdir,'makefile'),'w') as makefile:
-+        makefile.write("SLEPC_PETSC_SNES_LIB = -lpetsc -lblas -llapack -lscalapack\n")
++        # PETSC_LIB_BASIC should be  PETSC_SNES_LIB_BASIC, but petsc doesn't define it
++        makefile.write("SLEPC_PETSC_SNES_LIB = ${PETSC_LIB_BASIC} ${BLAS_LAPACK_LIB} ${SCALAPACK_LIB}\n")
          makefile.write('checklink: checklink.o\n')
 -        makefile.write('\t${CLINKER} -o checklink checklink.o ${LINKFLAGS} ${PETSC_SNES_LIB}\n')
 +        makefile.write('\t${CLINKER} -o checklink checklink.o ${LINKFLAGS} ${SLEPC_PETSC_SNES_LIB}\n')
@@ -28,20 +31,21 @@ index 86c82d84b..751c1de94 100644
          makefile.write('include '+os.path.join('${PETSC_DIR}','lib','petsc','conf','variables')+'\n')
          makefile.write('include '+os.path.join('${PETSC_DIR}','lib','petsc','conf','rules')+'\n')
 diff --git a/config/packages/slepc.py b/config/packages/slepc.py
-index f6f8e79d6..86c2f61b1 100644
+index f6f8e79d6..d12140827 100644
 --- a/config/packages/slepc.py
 +++ b/config/packages/slepc.py
-@@ -62,10 +62,11 @@ class SLEPc(package.Package):
+@@ -62,10 +62,12 @@ class SLEPc(package.Package):
      # Single library installation
      if petsc.singlelib:
        slepcvars.write('SHLIBS = libslepc\n')
-+      slepcvars.write('SLEPC_PETSC_SNES_LIB = -L${SLEPC_LIB_DIR} -lpetsc -lblas -llapack -lscalapack\n')
++      # PETSC_LIB_BASIC should be PETSC_SNES_LIB_BASIC, but petsc doesn't define it
++      slepcvars.write('SLEPC_PETSC_SNES_LIB = -L${SLEPC_LIB_DIR} ${PETSC_LIB_BASIC} ${BLASLAPACK_LIB} ${SCALAPACK_LIB}\n')
        slepcvars.write('LIBNAME = '+os.path.join('${INSTALL_LIB_DIR}','libslepc.${AR_LIB_SUFFIX}')+'\n')
++      slepcvars.write('SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${SLEPC_LIB_BASIC} ${PETSC_LIB_BASIC}\n')
        for module in ['SYS','EPS','SVD','PEP','NEP','MFN','LME']:
 -        slepcvars.write('SLEPC_'+module+'_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc ${SLEPC_EXTERNAL_LIB} ${PETSC_SNES_LIB}\n')
 -      slepcvars.write('SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc ${SLEPC_EXTERNAL_LIB} ${PETSC_SNES_LIB}\n')
-+        slepcvars.write('SLEPC_'+module+'_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc -lpetsc\n')
-+      slepcvars.write('SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc -lpetsc\n')
++        slepcvars.write('SLEPC_'+module+'_LIB = ${SLEPC_LIB}\n')
  
    def ShowInfo(self):
      self.log.Println('\nSLEPc directory:\n  '+self.dir)
