@@ -1,0 +1,76 @@
+From a3fc5bc344905c849c8ffcdf4153bacab376c71b Mon Sep 17 00:00:00 2001
+From: Min RK <benjaminrk@gmail.com>
+Date: Mon, 22 Jan 2024 12:15:07 +0100
+Subject: [PATCH] only link direct dependencies
+
+petsc, blas, lapack, scalapack
+
+and don't export more than -lslepc in SLEPC_LIB
+---
+ config/package.py        | 3 ++-
+ config/packages/slepc.py | 5 +++--
+ gmakefile                | 6 +++---
+ 3 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/config/package.py b/config/package.py
+index 86c82d84b..751c1de94 100644
+--- a/config/package.py
++++ b/config/package.py
+@@ -366,8 +366,9 @@ Downloaded package %s from: %s is not a tarball.
+       self.log.Exit('Cannot create temporary directory')
+     try:
+       with open(os.path.join(tmpdir,'makefile'),'w') as makefile:
++        makefile.write("SLEPC_PETSC_SNES_LIB = -lpetsc -lblas -llapack -lscalapack\n")
+         makefile.write('checklink: checklink.o\n')
+-        makefile.write('\t${CLINKER} -o checklink checklink.o ${LINKFLAGS} ${PETSC_SNES_LIB}\n')
++        makefile.write('\t${CLINKER} -o checklink checklink.o ${LINKFLAGS} ${SLEPC_PETSC_SNES_LIB}\n')
+         makefile.write('\t@${RM} -f checklink checklink.o\n')
+         makefile.write('include '+os.path.join('${PETSC_DIR}','lib','petsc','conf','variables')+'\n')
+         makefile.write('include '+os.path.join('${PETSC_DIR}','lib','petsc','conf','rules')+'\n')
+diff --git a/config/packages/slepc.py b/config/packages/slepc.py
+index f6f8e79d6..86c2f61b1 100644
+--- a/config/packages/slepc.py
++++ b/config/packages/slepc.py
+@@ -62,10 +62,11 @@ class SLEPc(package.Package):
+     # Single library installation
+     if petsc.singlelib:
+       slepcvars.write('SHLIBS = libslepc\n')
++      slepcvars.write('SLEPC_PETSC_SNES_LIB = -L${SLEPC_LIB_DIR} -lpetsc -lblas -llapack -lscalapack\n')
+       slepcvars.write('LIBNAME = '+os.path.join('${INSTALL_LIB_DIR}','libslepc.${AR_LIB_SUFFIX}')+'\n')
+       for module in ['SYS','EPS','SVD','PEP','NEP','MFN','LME']:
+-        slepcvars.write('SLEPC_'+module+'_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc ${SLEPC_EXTERNAL_LIB} ${PETSC_SNES_LIB}\n')
+-      slepcvars.write('SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc ${SLEPC_EXTERNAL_LIB} ${PETSC_SNES_LIB}\n')
++        slepcvars.write('SLEPC_'+module+'_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc -lpetsc\n')
++      slepcvars.write('SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} -lslepc -lpetsc\n')
+ 
+   def ShowInfo(self):
+     self.log.Println('\nSLEPc directory:\n  '+self.dir)
+diff --git a/gmakefile b/gmakefile
+index 196f1f1e7..d61542cc9 100644
+--- a/gmakefile
++++ b/gmakefile
+@@ -96,18 +96,18 @@ showcsrc:
+ define SHARED_RECIPE_DLL
+   @$(RM) $@ dllcmd.${PETSC_ARCH}
+   @cygpath -w $^ > dllcmd.${PETSC_ARCH}
+-  $(call quiet,CLINKER) $(sl_linker_args) -o $@ @dllcmd.${PETSC_ARCH} $(SLEPC_EXTERNAL_LIB) $(PETSC_SNES_LIB)
++  $(call quiet,CLINKER) $(sl_linker_args) -o $@ @dllcmd.${PETSC_ARCH} $(SLEPC_EXTERNAL_LIB) $(SLEPC_PETSC_SNES_LIB)
+   @$(RM) dllcmd.${PETSC_ARCH}
+ endef
+ 
+ define SHARED_RECIPE_ATFILE
+   $(file > $@.args,$^)
+-  $(call quiet,CLINKER) $(sl_linker_args) -o $@ @$@.args $(SLEPC_EXTERNAL_LIB) $(PETSC_SNES_LIB)
++  $(call quiet,CLINKER) $(sl_linker_args) -o $@ @$@.args $(SLEPC_EXTERNAL_LIB) $(SLEPC_PETSC_SNES_LIB)
+   @$(RM) $@.args
+ endef
+ 
+ define SHARED_RECIPE_DEFAULT
+-  $(call quiet,CLINKER) $(sl_linker_args) -o $@ $^ $(SLEPC_EXTERNAL_LIB) $(PETSC_SNES_LIB)
++  $(call quiet,CLINKER) $(sl_linker_args) -o $@ $^ $(SLEPC_EXTERNAL_LIB) $(SLEPC_PETSC_SNES_LIB)
+ endef
+ 
+ GMAKE4 = $(if $(findstring 3.99,$(firstword $(sort 3.99 $(MAKE_VERSION)))),1,)
+-- 
+2.42.0
+

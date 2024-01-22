@@ -1,6 +1,6 @@
 {% set version = "3.20.1" %}
 {% set sha256 = "5a36b664895881d3858d0644f56bf7bb922bdab70d732fa11cbf6442fec11806" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
 {% set mpi = mpi or 'mpich' %}
@@ -15,6 +15,9 @@ package:
 source:
   url: http://slepc.upv.es/download/distrib/slepc-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # avoid transitive overlinking through petsc
+    - link-petsc.patch
 
 build:
   skip: true  # [win]
@@ -36,19 +39,16 @@ requirements:
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
   host:
     - libblas
-    - libcblas
     - liblapack
     - {{ mpi }}
-    - mumps-mpi
     - petsc {{ version_xy }}.* {{ scalar }}_*
     - scalapack
-    - suitesparse
   run:
     - {{ mpi }}
-    - mumps-mpi
+    - libblas
+    - liblapack
     - petsc
     - scalapack
-    - suitesparse
 
 test:
   requires:
