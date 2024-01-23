@@ -36,19 +36,16 @@ requirements:
     - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
   host:
     - libblas
-    - libcblas
     - liblapack
     - {{ mpi }}
-    - mumps-mpi
     - petsc {{ version_xy }}.* {{ scalar }}_*
     - scalapack
-    - suitesparse
   run:
     - {{ mpi }}
-    - mumps-mpi
+    - libblas
+    - liblapack
     - petsc
     - scalapack
-    - suitesparse
 
 test:
   requires:
