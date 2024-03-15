@@ -24,16 +24,12 @@ fortran_compiler_version:
 - '12'
 libblas:
 - 3.9 *netlib
-libcblas:
-- 3.9 *netlib
 liblapack:
 - 3.9 *netlib
 mpi:
 - openmpi
 mpich:
 - '4'
-mumps_mpi:
-- 5.6.2
 openmpi:
 - '4'
 petsc:
@@ -41,12 +37,8 @@ petsc:
 pin_run_as_build:
   petsc:
     max_pin: x.x
-  suitesparse:
-    max_pin: x.x
 scalar:
 - complex
-suitesparse:
-- '5'
 target_platform:
 - linux-aarch64
 zip_keys:

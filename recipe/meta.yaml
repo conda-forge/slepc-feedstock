@@ -1,6 +1,6 @@
-{% set version = "3.20.1" %}
-{% set sha256 = "5a36b664895881d3858d0644f56bf7bb922bdab70d732fa11cbf6442fec11806" %}
-{% set build = 2 %}
+{% set version = "3.20.2" %}
+{% set sha256 = "125258c87360e326675238eaeb21ce2fbb3f27f4eeb1c72062043931aea05493" %}
+{% set build = 0 %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
 {% set mpi = mpi or 'mpich' %}
