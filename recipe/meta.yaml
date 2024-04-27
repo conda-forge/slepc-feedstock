@@ -1,6 +1,6 @@
-{% set version = "3.21.0" %}
-{% set sha256 = "782833f0caa6585509a837ccd470265c62a1bb56ba64e54c38bde6c63d92629e" %}
-{% set build = 1 %}
+{% set version = "3.21.1" %}
+{% set sha256 = "beb33f0a15c3ce81744b15ad09ddf84dae70dbf3475c5ef032b8549ab87d6d8a" %}
+{% set build = 0 %}
 
 {% set version_xy = version.rsplit(".", 1)[0] %}
 {% set mpi = mpi or 'mpich' %}
@@ -28,6 +28,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - make
