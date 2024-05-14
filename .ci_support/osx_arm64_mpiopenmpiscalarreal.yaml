@@ -12,6 +12,10 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+cuda_compiler:
+- None
+cuda_compiler_version:
+- None
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
@@ -34,9 +38,6 @@ openmpi:
 - '4'
 petsc:
 - '3.21'
-pin_run_as_build:
-  petsc:
-    max_pin: x.x
 scalar:
 - real
 target_platform:
