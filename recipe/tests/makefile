@@ -1,5 +1,9 @@
 include ${SLEPC_DIR}/lib/slepc/conf/slepc_common
 
+testdlopen: testdlopen.o
+	${CLINKER} -o testdlopen testdlopen.o -lslepc -ldl
+	${RM} testdlopen.o
+
 test10: test10.o
 	${CLINKER} -o test10 test10.o ${SLEPC_LIB}
 	${RM} test10.o
