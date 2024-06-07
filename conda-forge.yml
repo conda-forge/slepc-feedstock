@@ -1,3 +1,5 @@
+azure:
+  free_disk_space: true
 build_platform:
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
@@ -11,6 +13,4 @@ github:
 provider:
   linux_aarch64: default
   linux_ppc64le: default
-azure:
-  free_disk_space: true
 test: native_and_emulated
