@@ -1,19 +1,5 @@
-From 0c8bcbb00e16005c17c3c5a99e5f2b94a8637bd2 Mon Sep 17 00:00:00 2001
-From: Min RK <benjaminrk@gmail.com>
-Date: Tue, 5 Nov 2024 09:14:24 +0100
-Subject: [PATCH] fix invocation of install_name_tool on mac
-
-resolve install_name_tool on $PATH instead of hardcoded /usr/bin/install_name_tool
-
-equivalent patch already applied upstream to petsc
-
-not identical because slepc doesn't have `executeShellCommand`
----
- config/install.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
 diff --git a/config/install.py b/config/install.py
-index 583e76f90..c4db725cb 100755
+index 583e76f90..d6169e43e 100755
 --- a/config/install.py
 +++ b/config/install.py
 @@ -520,11 +520,11 @@ for dir in dirs:
@@ -22,15 +8,13 @@ index 583e76f90..c4db725cb 100755
          (result, output) = subprocess.getstatusoutput(self.ranlib+' '+dst)
 -    if os.path.splitext(dst)[1] == '.dylib' and os.path.isfile('/usr/bin/install_name_tool'):
 -      (result, output) = subprocess.getstatusoutput('otool -D '+src)
+-      oldname = output[output.find("\n")+1:]
 +    if os.path.splitext(dst)[1] == '.dylib' and shutil.which('otool') and shutil.which('install_name_tool'):
 +      output = subprocess.check_output(['otool', '-D', src], universal_newlines=True)
-       oldname = output[output.find("\n")+1:]
++      oldname = output[output.find("\n")+1:].strip()
        installName = oldname.replace(os.path.realpath(self.archDir), self.installDir)
 -      (result, output) = subprocess.getstatusoutput('/usr/bin/install_name_tool -id '+installName+' '+dst)
 +      subprocess.check_output(['install_name_tool', '-id', installName, dst])
      # preserve the original timestamps - so that the .a vs .so time order is preserved
      shutil.copystat(src,dst)
      return
--- 
-2.45.0
-
