@@ -96,3 +96,8 @@ rm -f  $PREFIX/lib/slepc/conf/*.log
 rm -f  $PREFIX/lib/slepc/conf/*.pyc
 rm -f  $PREFIX/lib/slepc/conf/uninstall.py
 rm -fr $PREFIX/lib/libslepc.*.dylib.dSYM
+
+if [[ "${target_platform}" == osx-* ]]; then
+  # check install_name patch
+  otool -L $PREFIX/lib/libslepc.dylib
+fi
