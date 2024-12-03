@@ -30,8 +30,6 @@ package:
 source:
   url: http://slepc.upv.es/download/distrib/slepc-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - install_name_tool.patch
 
 build:
   skip: true  # [win]
