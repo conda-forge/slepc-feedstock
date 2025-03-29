@@ -27,9 +27,9 @@ fortran_compiler:
 fortran_compiler_version:
 - '11'
 libblas:
-- 3.9 *netlib
+- 3.9.* *netlib
 liblapack:
-- 3.9 *netlib
+- 3.9.* *netlib
 mpi:
 - mpich
 mpich:
@@ -37,9 +37,11 @@ mpich:
 openmpi:
 - '5'
 petsc:
-- '3.21'
+- '3.22'
 scalar:
 - real
+slepc:
+- '3.22'
 target_platform:
 - linux-aarch64
 zip_keys:
