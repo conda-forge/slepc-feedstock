@@ -1,0 +1,135 @@
+schema_version: 1
+
+context:
+  version: 3.23.0
+  sha256: b60e58b2fa5eb7db05ce5e3a585811b43b1cc7cf89c32266e37b05f0cefd8899
+  build: 0
+  version_xy: ${{ (version | split('.'))[:2] | join('.') }}
+  # these variables should all be overridden in variant files
+  # but default values are sometimes needed for conda-smithy rerender
+  mpi: ${{ mpi | default('mpich') }}
+  scalar: ${{ scalar | default('real') }}
+  cuda_compiler_version: ${{ cuda_compiler_version | default('None') }}
+  # construct some variables to use in the recipe
+  # with_cuda can be used as a bool for cuda or not conditions
+  with_cuda: ${{ 'true' if cuda_compiler_version != 'None' else '' }}
+  # cuda_major is always the major version of cuda as an integer string ('0' if not with_cuda)
+  cuda_major: >-
+    ${{
+      cuda_compiler_version | split('.') | first
+      if with_cuda
+      else "0"
+    }}
+  # construct the build prefix (e.g. 'cuda12_complex' or 'real')
+  cuda_prefix: ${{ "cuda" + cuda_major + "_" }}
+  build_prefix: ${{ cuda_prefix + scalar if with_cuda else scalar }}
+
+package:
+  name: slepc
+  version: ${{ version }}
+
+source:
+  url: http://slepc.upv.es/download/distrib/slepc-${{ version }}.tar.gz
+  sha256: ${{ sha256 }}
+
+build:
+  number: ${{ build }}
+  string: ${{ build_prefix }}_h${{ PKG_HASH }}_${{ build }}
+  skip: win
+  variant:
+    # deprioritize cuda and complex with track_features
+    down_prioritize_variant: >
+      ${{
+        (1 if with_cuda else 0)
+      + (1 if scalar == "complex" else 0)
+      }}
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('fortran') }}
+    - if: with_cuda
+      then: ${{ compiler('cuda') }}
+    - make
+    - python 3.12.*
+    - gnuconfig
+    - if: mpi == 'openmpi' and build_platform != target_platform
+      then: ${{ mpi }}
+  host:
+    - libblas
+    - liblapack
+    - ${{ mpi }}
+    - petsc ${{ version_xy }}.* ${{ build_prefix }}_*
+    - scalapack
+    - if: with_cuda
+      then:
+        - cuda-version ${{ cuda_compiler_version }}.*
+        - if: cuda_major == "11"
+          then:
+            - cudatoolkit
+          else:
+            - cuda-cudart-dev
+            - cuda-nvtx-dev
+            - libcublas-dev
+            - libcufft-dev
+            - libcurand-dev
+            - libcusolver-dev
+            - libcusparse-dev
+  run_exports:
+    weak:
+      - ${{ pin_subpackage('slepc', upper_bound='x.x') }}
+      - slepc * ${{ build_prefix }}_*
+  ignore_run_exports:
+    from_package:
+      - if: with_cuda
+        then:
+          - ${{ compiler("cuda") | split | first }}
+      - cudatoolkit
+      - cuda-cudart-dev
+      - cuda-nvtx-dev
+      - libcublas-dev
+      - libcufft-dev
+      - libcurand-dev
+      - libcusolver-dev
+      - libcusparse-dev
+
+tests:
+  - package_contents:
+      lib:
+        - slepc
+      include:
+        - 
+  - files:
+      recipe:
+        - tests/testdlopen.c
+        - tests/test10.c
+        - tests/test14f.F
+        - tests/makefile
+    requirements:
+      run:
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+        - ${{ compiler('fortran') }}
+        - make
+        - pkg-config
+    script:
+      file: run_test.sh
+      env:
+        target_platform: ${{ target_platform }}
+        cuda_compiler_version: ${{ cuda_compiler_version }}
+
+about:
+  summary: |
+    SLEPc: Scalable Library for Eigenvalue Problem Computations
+  license: BSD-2-Clause
+  license_file: LICENSE.md
+  homepage: http://slepc.upv.es/
+
+extra:
+  recipe-maintainers:
+    - dalcinl
+    - joseeroman
+    - minrk
+

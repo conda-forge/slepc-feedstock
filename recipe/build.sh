@@ -19,10 +19,6 @@ export OPAL_PREFIX=$PREFIX
 ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
 
-# We need to make the libcuda stub visible to the configure script
-if (( CUDA_CONDA_MAJOR > 11 )); then
-  ln -s ${BUILD_PREFIX}/targets/$CUDA_CONDA_TARGET_NAME/lib/stubs/ $PREFIX/lib/stubs
-fi
 
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
@@ -65,11 +61,25 @@ EOF
 
 # The PETSc CUDA build does not store the location of the headers
 if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if (( CUDA_CONDA_MAJOR > 11 )); then
-    cuda_incl="-I$PREFIX/targets/$CUDA_CONDA_TARGET_NAME/include -I$BUILD_PREFIX/targets/$CUDA_CONDA_TARGET_NAME/include"
+  if [[ "${target_platform}" == "linux-64" ]]; then
+    export CUDA_CONDA_TARGET_NAME=x86_64-linux
+  elif [[ "${target_platform}" == "linux-aarch64" ]]; then
+    export CUDA_CONDA_TARGET_NAME=sbsa-linux
+  elif [[ "${target_platform}" == "linux-ppc64le" ]]; then
+    export CUDA_CONDA_TARGET_NAME=ppc64le-linux
   else
-    cuda_incl="-I$CUDA_HOME/targets/$CUDA_CONDA_TARGET_NAME/include"
+    echo "unexpected cuda target_platform=${target_platform}"
+    exit 1
   fi
+  if [[ -n "$CUDA_HOME" ]]; then # cuda 11.8
+    # CUDA in $CUDA_HOME/targets/xxx
+    cuda_dir=$CUDA_HOME
+  else
+    # CUDA in $PREFIX/targets/xxx
+    cuda_dir=$PREFIX # cuda 12 and later
+  fi
+  cuda_incl=$cuda_dir/targets/${CUDA_CONDA_TARGET_NAME}/include
+
   echo "CUDACPPFLAGS+=$cuda_incl" >> $slepcvariables
   echo "CXXPPFLAGS+=$cuda_incl" >> $slepcvariables
   echo "CPPFLAGS+=$cuda_incl" >> $slepcvariables
@@ -82,9 +92,6 @@ make install
 # Remove symlinks in ${PREFIX}/bin
 rm ${PREFIX}/bin/make
 rm ${PREFIX}/bin/dsymutil
-if (( CUDA_CONDA_MAJOR > 11 )); then
-  rm $PREFIX/lib/stubs
-fi
 
 echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
