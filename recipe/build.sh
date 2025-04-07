@@ -19,6 +19,19 @@ export OPAL_PREFIX=$PREFIX
 ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
 ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
 
+# Set cuda target
+if [[ "${cuda_compiler_version}" != "None" ]]; then
+  if [[ "${target_platform}" == "linux-64" ]]; then
+    export CUDA_CONDA_TARGET_NAME=x86_64-linux
+  elif [[ "${target_platform}" == "linux-aarch64" ]]; then
+    export CUDA_CONDA_TARGET_NAME=sbsa-linux
+  elif [[ "${target_platform}" == "linux-ppc64le" ]]; then
+    export CUDA_CONDA_TARGET_NAME=ppc64le-linux
+  else
+    echo "unexpected cuda target_platform=${target_platform}"
+    exit 1
+  fi
+fi
 
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
@@ -61,16 +74,6 @@ EOF
 
 # The PETSc CUDA build does not store the location of the headers
 if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if [[ "${target_platform}" == "linux-64" ]]; then
-    export CUDA_CONDA_TARGET_NAME=x86_64-linux
-  elif [[ "${target_platform}" == "linux-aarch64" ]]; then
-    export CUDA_CONDA_TARGET_NAME=sbsa-linux
-  elif [[ "${target_platform}" == "linux-ppc64le" ]]; then
-    export CUDA_CONDA_TARGET_NAME=ppc64le-linux
-  else
-    echo "unexpected cuda target_platform=${target_platform}"
-    exit 1
-  fi
   if [[ -n "$CUDA_HOME" ]]; then # cuda 11.8
     # CUDA in $CUDA_HOME/targets/xxx
     cuda_dir=$CUDA_HOME
