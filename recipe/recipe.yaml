@@ -70,6 +70,7 @@ requirements:
           then:
             - cudatoolkit
           else:
+            - cuda-driver-dev
             - cuda-cudart-dev
             - cuda-nvtx-dev
             - libcublas-dev
