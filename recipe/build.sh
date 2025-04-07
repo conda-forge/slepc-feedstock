@@ -74,7 +74,7 @@ EOF
 
 # The PETSc CUDA build does not store the location of the headers
 if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if [[ -n "$CUDA_HOME" ]]; then # cuda 11.8
+  if [[ -n "${CUDA_HOME:-}" ]]; then # cuda 11.8
     # CUDA in $CUDA_HOME/targets/xxx
     cuda_dir=$CUDA_HOME
   else
@@ -89,7 +89,7 @@ if [[ "${cuda_compiler_version}" != "None" ]]; then
 fi
 cat $slepcvariables
 
-make MAKE_NP=${CPU_COUNT}
+make MAKE_NP=${CPU_COUNT} V=1
 make install
 
 # Remove symlinks in ${PREFIX}/bin
