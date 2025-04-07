@@ -23,6 +23,6 @@ else
     make test10
     make test14f
 
-    make runtest10
-    make runtest14f
+    make runtest10 MPIEXEC=mpiexec
+    make runtest14f MPIEXEC=mpiexec
 fi
