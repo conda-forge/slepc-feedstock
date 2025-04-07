@@ -12,7 +12,7 @@ fi
 export PETSC_DIR=${PREFIX}
 export SLEPC_DIR=${PREFIX}
 cd "tests"
-if [[ -n "${cuda_compiler_version}" ]]; then
+if [[ "${cuda_compiler_version}" != "None" ]]; then
     make testdlopen
     # aarch64 failing tests
     # ./testdlopen: /lib64/libm.so.6: version `GLIBC_2.27' not found (required by $PREFIX/lib/./libcurand.so.10)
