@@ -9,7 +9,6 @@
 {% endif %}
 {% set build = build + 200 %}  # [cuda_compiler_version == "None"]
 
-
 {% set build_prefix = scalar %}
 {% if cuda_compiler_version == "None" %}
 {% set cuda_major = 0 %}
