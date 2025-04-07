@@ -40,7 +40,7 @@ if [[ "${cuda_compiler_version}" != "None" ]]; then
   fi
   cuda_incl=$cuda_dir/targets/${CUDA_CONDA_TARGET_NAME}/include
   export CUDACPPFLAGS="${CUDACPPFLAGS:-} -I$cuda_incl"
-  export CXXPPFLAGS="${CXXPPFLAGS} -I$cuda_incl"
+  export CXXPPFLAGS="${CXXPPFLAGS:-} -I$cuda_incl"
   export CPPFLAGS="${CPPFLAGS} -I$cuda_incl"
 fi
 
