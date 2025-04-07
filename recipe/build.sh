@@ -31,6 +31,17 @@ if [[ "${cuda_compiler_version}" != "None" ]]; then
     echo "unexpected cuda target_platform=${target_platform}"
     exit 1
   fi
+  if [[ -n "${CUDA_HOME:-}" ]]; then # cuda 11.8
+    # CUDA in $CUDA_HOME/targets/xxx
+    cuda_dir=$CUDA_HOME
+  else
+    # CUDA in $PREFIX/targets/xxx
+    cuda_dir=$PREFIX # cuda 12 and later
+  fi
+  cuda_incl=$cuda_dir/targets/${CUDA_CONDA_TARGET_NAME}/include
+  export CUDACPPFLAGS="${CUDACPPFLAGS:-} -I$cuda_incl"
+  export CXXPPFLAGS="${CXXPPFLAGS} -I$cuda_incl"
+  export CPPFLAGS="${CPPFLAGS} -I$cuda_incl"
 fi
 
 python ./configure \
@@ -72,21 +83,6 @@ PETSC_SNES_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${PETSC_
 SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${SLEPC_LIB_BASIC} ${PETSC_LIB_BASIC}
 EOF
 
-# The PETSc CUDA build does not store the location of the headers
-if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if [[ -n "${CUDA_HOME:-}" ]]; then # cuda 11.8
-    # CUDA in $CUDA_HOME/targets/xxx
-    cuda_dir=$CUDA_HOME
-  else
-    # CUDA in $PREFIX/targets/xxx
-    cuda_dir=$PREFIX # cuda 12 and later
-  fi
-  cuda_incl=$cuda_dir/targets/${CUDA_CONDA_TARGET_NAME}/include
-
-  echo "CUDACPPFLAGS+=$cuda_incl" >> $slepcvariables
-  echo "CXXPPFLAGS+=$cuda_incl" >> $slepcvariables
-  echo "CPPFLAGS+=$cuda_incl" >> $slepcvariables
-fi
 cat $slepcvariables
 
 make MAKE_NP=${CPU_COUNT} V=1
