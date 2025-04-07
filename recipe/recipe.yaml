@@ -100,15 +100,14 @@ tests:
       lib:
         - slepc
       include:
-        - 
+        - slepc.h
+        - slepc.mod
   - files:
       recipe:
-        - tests/testdlopen.c
-        - tests/test10.c
-        - tests/test14f.F
-        - tests/makefile
+        - tests/
     requirements:
       run:
+        - ${{ stdlib('c') }}
         - ${{ compiler('c') }}
         - ${{ compiler('cxx') }}
         - ${{ compiler('fortran') }}
