@@ -34,7 +34,7 @@ source:
 
 build:
   number: ${{ build }}
-  string: ${{ build_prefix }}_h${{ PKG_HASH }}_${{ build }}
+  string: ${{ build_prefix }}_h${{ hash }}_${{ build }}
   skip: win
   variant:
     # deprioritize cuda and complex with track_features
