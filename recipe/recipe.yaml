@@ -71,6 +71,7 @@ requirements:
             - cudatoolkit
           else:
             - cuda-driver-dev
+            - cuda-crt-dev
             - cuda-cudart-dev
             - cuda-nvtx-dev
             - libcublas-dev
@@ -88,6 +89,7 @@ requirements:
         then:
           - ${{ compiler("cuda") | split | first }}
       - cudatoolkit
+      - cuda-crt-dev
       - cuda-cudart-dev
       - cuda-nvtx-dev
       - libcublas-dev
