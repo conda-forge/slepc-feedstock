@@ -4,26 +4,6 @@ export PETSC_DIR=$PREFIX
 export SLEPC_DIR=$SRC_DIR
 export SLEPC_ARCH=arch-conda-c-opt
 
-# scrub debug-prefix-map args, which cause problems in pkg-config
-export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-export CXXFLAGS=$(echo ${CXXFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-
-unset CXX
-
-# openmpi:
-export OMPI_CC=$CC
-export OPAL_PREFIX=$PREFIX
-
-# Add symlinks in ${PREFIX}/bin
-ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
-ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
-
-# We need to make the libcuda stub visible to the configure script
-if (( CUDA_CONDA_MAJOR > 11 )); then
-  ln -s ${BUILD_PREFIX}/targets/$CUDA_CONDA_TARGET_NAME/lib/stubs/ $PREFIX/lib/stubs
-fi
-
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
 
@@ -40,7 +20,7 @@ sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
 for path in $SLEPC_DIR $BUILD_PREFIX; do
     for f in $(grep -l "${path}" installed-arch-*/include/slepc*.h); do
         echo "Fixing ${path} in $f"
-        sedinplace s%$path%\${PREFIX}%g $f
+        sedinplace s%${path}%\${PREFIX}%g $f
     done
 done
 
@@ -63,28 +43,10 @@ PETSC_SNES_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${PETSC_
 SLEPC_LIB = ${CC_LINKER_SLFLAG}${SLEPC_LIB_DIR} -L${SLEPC_LIB_DIR} ${SLEPC_LIB_BASIC} ${PETSC_LIB_BASIC}
 EOF
 
-# The PETSc CUDA build does not store the location of the headers
-if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if (( CUDA_CONDA_MAJOR > 11 )); then
-    cuda_incl="-I$PREFIX/targets/$CUDA_CONDA_TARGET_NAME/include -I$BUILD_PREFIX/targets/$CUDA_CONDA_TARGET_NAME/include"
-  else
-    cuda_incl="-I$CUDA_HOME/targets/$CUDA_CONDA_TARGET_NAME/include"
-  fi
-  echo "CUDACPPFLAGS+=$cuda_incl" >> $slepcvariables
-  echo "CXXPPFLAGS+=$cuda_incl" >> $slepcvariables
-  echo "CPPFLAGS+=$cuda_incl" >> $slepcvariables
-fi
 cat $slepcvariables
 
-make MAKE_NP=${CPU_COUNT}
+make MAKE_NP=${CPU_COUNT} V=1
 make install
-
-# Remove symlinks in ${PREFIX}/bin
-rm ${PREFIX}/bin/make
-rm ${PREFIX}/bin/dsymutil
-if (( CUDA_CONDA_MAJOR > 11 )); then
-  rm $PREFIX/lib/stubs
-fi
 
 echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
