@@ -4,46 +4,6 @@ export PETSC_DIR=$PREFIX
 export SLEPC_DIR=$SRC_DIR
 export SLEPC_ARCH=arch-conda-c-opt
 
-# scrub debug-prefix-map args, which cause problems in pkg-config
-export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-export CXXFLAGS=$(echo ${CXXFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-export FFLAGS=$(echo ${FFLAGS:-} | sed -E 's@\-fdebug\-prefix\-map[^ ]*@@g')
-
-unset CXX
-
-# openmpi:
-export OMPI_CC=$CC
-export OPAL_PREFIX=$PREFIX
-
-# Add symlinks in ${PREFIX}/bin
-ln -s ${BUILD_PREFIX}/bin/make     ${PREFIX}/bin
-ln -s ${BUILD_PREFIX}/bin/dsymutil ${PREFIX}/bin
-
-# Set cuda target
-if [[ "${cuda_compiler_version}" != "None" ]]; then
-  if [[ "${target_platform}" == "linux-64" ]]; then
-    export CUDA_CONDA_TARGET_NAME=x86_64-linux
-  elif [[ "${target_platform}" == "linux-aarch64" ]]; then
-    export CUDA_CONDA_TARGET_NAME=sbsa-linux
-  elif [[ "${target_platform}" == "linux-ppc64le" ]]; then
-    export CUDA_CONDA_TARGET_NAME=ppc64le-linux
-  else
-    echo "unexpected cuda target_platform=${target_platform}"
-    exit 1
-  fi
-  if [[ -n "${CUDA_HOME:-}" ]]; then # cuda 11.8
-    # CUDA in $CUDA_HOME/targets/xxx
-    cuda_dir=$CUDA_HOME
-  else
-    # CUDA in $PREFIX/targets/xxx
-    cuda_dir=$PREFIX # cuda 12 and later
-  fi
-  cuda_incl=$cuda_dir/targets/${CUDA_CONDA_TARGET_NAME}/include
-  export CUDACPPFLAGS="${CUDACPPFLAGS:-} -I$cuda_incl"
-  export CXXPPFLAGS="${CXXPPFLAGS:-} -I$cuda_incl"
-  export CPPFLAGS="${CPPFLAGS} -I$cuda_incl"
-fi
-
 python ./configure \
   --prefix=$PREFIX || (cat configure.log && exit 1)
 
@@ -60,7 +20,7 @@ sedinplace s%\"arch-.*\"%\"${SLEPC_ARCH}\"%g installed-arch-*/include/slepc*.h
 for path in $SLEPC_DIR $BUILD_PREFIX; do
     for f in $(grep -l "${path}" installed-arch-*/include/slepc*.h); do
         echo "Fixing ${path} in $f"
-        sedinplace s%$path%\${PREFIX}%g $f
+        sedinplace s%${path}%\${PREFIX}%g $f
     done
 done
 
@@ -87,10 +47,6 @@ cat $slepcvariables
 
 make MAKE_NP=${CPU_COUNT} V=1
 make install
-
-# Remove symlinks in ${PREFIX}/bin
-rm ${PREFIX}/bin/make
-rm ${PREFIX}/bin/dsymutil
 
 echo "Removing example files"
 rm -fr $PREFIX/share/slepc/examples
