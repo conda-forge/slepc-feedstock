@@ -3,7 +3,7 @@ schema_version: 1
 context:
   version: "3.23.2"
   sha256: 3060a95692151ef0f9ba4ca11da18d5dcd86697b59f6aeee723de92d7bd465a1
-  build: 0
+  build: 1
   version_xy: ${{ (version | split('.'))[:2] | join('.') }}
   # these variables should all be overridden in variant files
   # but default values are sometimes needed for conda-smithy rerender
