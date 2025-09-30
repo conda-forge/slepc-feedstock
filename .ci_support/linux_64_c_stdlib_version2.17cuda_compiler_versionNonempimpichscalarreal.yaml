@@ -37,7 +37,7 @@ openmpi:
 scalar:
 - real
 target_platform:
-- linux-ppc64le
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
