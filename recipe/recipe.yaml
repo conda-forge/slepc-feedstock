@@ -125,6 +125,8 @@ about:
   license: BSD-2-Clause
   license_file: LICENSE.md
   homepage: http://slepc.upv.es/
+  repository: https://gitlab.com/slepc/slepc
+  documentation: https://slepc.upv.es/release/documentation/
 
 extra:
   recipe-maintainers:
