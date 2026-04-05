@@ -100,22 +100,24 @@ tests:
       include:
         - slepc.h
         - slepc.mod
-  - files:
-      recipe:
-        - tests/
-    requirements:
-      run:
-        - ${{ stdlib('c') }}
-        - ${{ compiler('c') }}
-        - ${{ compiler('cxx') }}
-        - ${{ compiler('fortran') }}
-        - make
-        - pkg-config
-    script:
-      file: run_test.sh
-      env:
-        target_platform: ${{ target_platform }}
-        cuda_compiler_version: ${{ cuda_compiler_version }}
+  - if: device == 'host'
+    then:
+      - files:
+          recipe:
+            - tests/
+        requirements:
+          run:
+            - ${{ stdlib('c') }}
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+            - ${{ compiler('fortran') }}
+            - make
+            - pkg-config
+        script:
+          file: run_test.sh
+          env:
+            target_platform: ${{ target_platform }}
+            cuda_compiler_version: ${{ cuda_compiler_version }}
 
 about:
   summary: |
