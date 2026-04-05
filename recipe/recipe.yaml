@@ -47,7 +47,7 @@ build:
 requirements:
   build:
     - ${{ compiler('c') }}
-    - ${{ stdlib("c") }}
+    - ${{ stdlib('c') }}
     - ${{ compiler('cxx') }}
     - ${{ compiler('fortran') }}
     - if: with_cuda
@@ -66,19 +66,15 @@ requirements:
     - if: with_cuda
       then:
         - cuda-version ${{ cuda_compiler_version }}.*
-        - if: cuda_major == "11"
-          then:
-            - cudatoolkit
-          else:
-            - cuda-driver-dev
-            - cuda-crt
-            - cuda-cudart-dev
-            - cuda-nvtx-dev
-            - libcublas-dev
-            - libcufft-dev
-            - libcurand-dev
-            - libcusolver-dev
-            - libcusparse-dev
+        - cuda-driver-dev
+        - cuda-cudart-dev
+        - cuda-nvml-dev
+        - cuda-nvtx-dev
+        - libcublas-dev
+        - libcufft-dev
+        - libcurand-dev
+        - libcusolver-dev
+        - libcusparse-dev
   run_exports:
     weak:
       - ${{ pin_subpackage('slepc', upper_bound='x.x') }}
@@ -89,7 +85,6 @@ requirements:
         then:
           - ${{ compiler("cuda") | split | first }}
       - cudatoolkit
-      - cuda-crt
       - cuda-cudart-dev
       - cuda-nvtx-dev
       - libcublas-dev
