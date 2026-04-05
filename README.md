@@ -195,34 +195,6 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_mpimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_mpimpichscalarcomplex</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">

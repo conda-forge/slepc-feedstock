@@ -1,9 +1,9 @@
 schema_version: 1
 
 context:
-  version: "3.24.3"
-  sha256: 3f13421f3fcd68fd720a143088506e0f91e24243844703997597eee793225452
-  build: 1
+  version: "3.25.0"
+  sha256: ba2d1cd42d637a7577cab63b0f9e910921fdd60db58290dd1041d60152655f78
+  build: 0
   version_xy: ${{ (version | split('.'))[:2] | join('.') }}
   # these variables should all be overridden in variant files
   # but default values are sometimes needed for conda-smithy rerender
@@ -47,7 +47,7 @@ build:
 requirements:
   build:
     - ${{ compiler('c') }}
-    - ${{ stdlib("c") }}
+    - ${{ stdlib('c') }}
     - ${{ compiler('cxx') }}
     - ${{ compiler('fortran') }}
     - if: with_cuda
@@ -66,19 +66,15 @@ requirements:
     - if: with_cuda
       then:
         - cuda-version ${{ cuda_compiler_version }}.*
-        - if: cuda_major == "11"
-          then:
-            - cudatoolkit
-          else:
-            - cuda-driver-dev
-            - cuda-crt
-            - cuda-cudart-dev
-            - cuda-nvtx-dev
-            - libcublas-dev
-            - libcufft-dev
-            - libcurand-dev
-            - libcusolver-dev
-            - libcusparse-dev
+        - cuda-driver-dev
+        - cuda-cudart-dev
+        - cuda-nvml-dev
+        - cuda-nvtx-dev
+        - libcublas-dev
+        - libcufft-dev
+        - libcurand-dev
+        - libcusolver-dev
+        - libcusparse-dev
   run_exports:
     weak:
       - ${{ pin_subpackage('slepc', upper_bound='x.x') }}
@@ -89,7 +85,6 @@ requirements:
         then:
           - ${{ compiler("cuda") | split | first }}
       - cudatoolkit
-      - cuda-crt
       - cuda-cudart-dev
       - cuda-nvtx-dev
       - libcublas-dev
@@ -105,22 +100,24 @@ tests:
       include:
         - slepc.h
         - slepc.mod
-  - files:
-      recipe:
-        - tests/
-    requirements:
-      run:
-        - ${{ stdlib('c') }}
-        - ${{ compiler('c') }}
-        - ${{ compiler('cxx') }}
-        - ${{ compiler('fortran') }}
-        - make
-        - pkg-config
-    script:
-      file: run_test.sh
-      env:
-        target_platform: ${{ target_platform }}
-        cuda_compiler_version: ${{ cuda_compiler_version }}
+  - if: device == 'host'
+    then:
+      - files:
+          recipe:
+            - tests/
+        requirements:
+          run:
+            - ${{ stdlib('c') }}
+            - ${{ compiler('c') }}
+            - ${{ compiler('cxx') }}
+            - ${{ compiler('fortran') }}
+            - make
+            - pkg-config
+        script:
+          file: run_test.sh
+          env:
+            target_platform: ${{ target_platform }}
+            cuda_compiler_version: ${{ cuda_compiler_version }}
 
 about:
   summary: |
@@ -128,6 +125,8 @@ about:
   license: BSD-2-Clause
   license_file: LICENSE.md
   homepage: http://slepc.upv.es/
+  repository: https://gitlab.com/slepc/slepc
+  documentation: https://slepc.upv.es/release/documentation/
 
 extra:
   recipe-maintainers:
