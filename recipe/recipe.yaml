@@ -100,7 +100,7 @@ tests:
       include:
         - slepc.h
         - slepc.mod
-  - if: device == 'host'
+  - if: not with_cuda
     then:
       - files:
           recipe:
