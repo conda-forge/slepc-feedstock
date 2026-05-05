@@ -9,6 +9,10 @@ Package license: BSD-2-Clause
 
 Summary: SLEPc: Scalable Library for Eigenvalue Problem Computations
 
+Development: https://gitlab.com/slepc/slepc
+
+Documentation: https://slepc.upv.es/release/documentation/
+
 Current build status
 ====================
 
