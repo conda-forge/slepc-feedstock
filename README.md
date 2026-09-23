@@ -17,7 +17,14 @@ Current build status
 ====================
 
 
-<table>
+<table><tr>
+    <td>GitHub Actions</td>
+    <td>
+      <a href="https://github.com/conda-forge/slepc-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/slepc-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      </a>
+    </td>
+  </tr>
     
   <tr>
     <td>Azure</td>
@@ -31,174 +38,6 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_version12.9mpiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonempiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpimpichscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarcomplex</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarcomplex" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarreal</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/slepc-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.28cuda_compiler_version13.0mpiopenmpiscalarreal" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_mpimpichscalarcomplex</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=1925&branchName=main">
@@ -279,31 +118,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `slepc` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda install slepc
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba install slepc
 ```
 
-It is possible to list all of the versions of `slepc` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add slepc
+# for installing globally
+pixi global install slepc
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `slepc` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search slepc --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search slepc --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search slepc --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -315,6 +196,8 @@ mamba repoquery whoneeds slepc --channel conda-forge
 # List dependencies of `slepc`:
 mamba repoquery depends slepc --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge
