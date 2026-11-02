@@ -1,8 +1,8 @@
 schema_version: 1
 
 context:
-  version: "3.26.0"
-  sha256: a2f4cc2af76d55c078c30ad8bc66b44736dac921a7912266eb44136fc1b6029d
+  version: "3.26.1"
+  sha256: d9b8bb27f6402e72e9d8f7ae9a1de241ff772b55d0bf265e8e10c61750f49cb9
   build: 0
   version_xy: ${{ (version | split('.'))[:2] | join('.') }}
   # these variables should all be overridden in variant files
